@@ -9,6 +9,7 @@ const FlightSchema = new Schema(
 		date: { type: String, required: true },
 		time: { type: String, required: true },
 		price: { type: Number, required: true },
+		availability: { type: Boolean, default: true, index: true },
 	},
 	{ timestamps: true }
 );
