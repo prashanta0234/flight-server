@@ -17,7 +17,7 @@ const UserRegistrationService = async (data: RegisterUserProps) => {
 	}
 	const hashedPass = await bcrypt.hash(data.password, 10);
 
-	await UserModel.create({
+	const user = await UserModel.create({
 		email,
 		gender,
 		name,
@@ -25,7 +25,7 @@ const UserRegistrationService = async (data: RegisterUserProps) => {
 		password: hashedPass,
 	});
 
-	const user = await UserModel.findOne({ email });
+	// const user = await UserModel.findOne({ email });
 
 	var token = await jwt.sign(
 		{

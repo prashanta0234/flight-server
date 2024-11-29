@@ -1,11 +1,11 @@
 import { config } from "../../../../utils/config";
 import { ErrorMaker } from "../../../../utils/error-maker";
 import { UserModel } from "../model/users.model";
-import { RegisterUserProps } from "../schemas/registerUser.schema";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { LoginUserProps } from "../schemas/loginUser.schema";
 
-const UserLoginService = async (data: RegisterUserProps) => {
+const UserLoginService = async (data: LoginUserProps) => {
 	const { email, password } = data;
 	const isExists = await UserModel.findOne({ email });
 	if (!isExists) {
