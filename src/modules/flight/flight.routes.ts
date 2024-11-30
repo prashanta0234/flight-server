@@ -7,6 +7,7 @@ import GetFlightsController from "./controllers/getFlights.controller";
 import { QueryValidationHandler } from "../../middleware/queryValidation.handler";
 import GetFilterFlightsController from "./controllers/getFilterFlights.controller";
 import { FilterFlightQuerySchema } from "./schemas/filterFlight.schema";
+import GetFlightsByIdController from "./controllers/getFlightById.controller";
 
 export const FlightRouter = Router();
 
@@ -22,3 +23,4 @@ FlightRouter.get(
 	QueryValidationHandler(FilterFlightQuerySchema),
 	GetFilterFlightsController
 );
+FlightRouter.get("/:id", GetFlightsByIdController);
