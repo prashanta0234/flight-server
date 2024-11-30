@@ -14,12 +14,16 @@ const FlightSchema = new Schema(
 	{ timestamps: true }
 );
 
-const SeatSchema = new Schema({
-	flightId: { type: Types.ObjectId, ref: "flights", required: true },
-	seatNumber: { type: String, required: true },
-	isBooked: { type: Boolean, default: false },
-	bookedBy: { type: String, default: null },
-});
+const SeatSchema = new Schema(
+	{
+		flightId: { type: Types.ObjectId, ref: "flights", required: true },
+		seatNumber: { type: String, required: true },
+		isBooked: { type: Boolean, default: false },
+		bookedBy: { type: String, default: null },
+		reservedAt: { type: Date, default: null },
+	},
+	{ timestamps: true }
+);
 
 export const FlightModel = model("flights", FlightSchema);
 export const SeatModel = model("seats", SeatSchema);

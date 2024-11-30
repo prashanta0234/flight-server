@@ -27,7 +27,7 @@ export const AuthGuard = (...requiredRoles: TUserRole[]) => {
 		if (requiredRoles && !requiredRoles.includes(role))
 			throw ErrorMaker(
 				"Not permitted",
-				"You are not permitted to use this service. Because you are not a doctor/Patient.",
+				"You are not permitted to use this service.",
 				403
 			);
 

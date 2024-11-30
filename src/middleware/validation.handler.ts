@@ -3,7 +3,6 @@ import { TryCatch } from "./try-catch";
 
 export const ValidationHandler = (schema: AnyZodObject) => {
 	return TryCatch(async (req, _, next) => {
-		console.log(req.body);
 		const payload = await schema.parseAsync(req.body);
 		req.body = payload;
 		next();
