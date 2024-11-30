@@ -13,6 +13,10 @@ const ConfirmBookingService = async (data: props) => {
 	session.startTransaction();
 
 	try {
+		const flight = await FlightModel.findById(flightId).session(session);
+		if (!flight) {
+			throw new Error("Flight not found.");
+		}
 		const seats = await SeatModel.find({
 			flightId,
 			seatNumber: { $in: seatNumbers },
@@ -24,10 +28,6 @@ const ConfirmBookingService = async (data: props) => {
 			throw new Error("Some seats have been released or not reserved.");
 		}
 
-		const flight = await FlightModel.findById(flightId).session(session);
-		if (!flight) {
-			throw new Error("Flight not found.");
-		}
 		const seatPrice = flight.price;
 
 		const totalPrice = seatPrice * seats.length;

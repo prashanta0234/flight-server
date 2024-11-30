@@ -4,6 +4,7 @@ import SeatBookingSchema from "./schemas/bookSeats.schema";
 import BookSeatController from "./controllers/bookSeats.controller";
 import { AuthGuard } from "../../middleware/authGuard";
 import ConfirmSeatController from "./controllers/confirmSeats.controller";
+import GetUserBookingsController from "./controllers/getUserBookings.controller";
 
 export const BookingRouter = Router();
 
@@ -20,3 +21,5 @@ BookingRouter.post(
 	ValidationHandler(SeatBookingSchema),
 	ConfirmSeatController
 );
+
+BookingRouter.get("/user/:id", AuthGuard("USER"), GetUserBookingsController);
