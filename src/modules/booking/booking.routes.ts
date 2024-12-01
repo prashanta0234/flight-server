@@ -8,6 +8,7 @@ import GetUserBookingsController from "./controllers/getUserBookings.controller"
 import GetBookingsController from "./controllers/getBookings.controller";
 import UpdateBookingSchema from "./schemas/updateBooking.schema";
 import UpdateBookingController from "./controllers/updateBookings.controller";
+import DeleteBookingController from "./controllers/deleteBookings.controller";
 
 export const BookingRouter = Router();
 
@@ -35,3 +36,5 @@ BookingRouter.patch(
 	ValidationHandler(UpdateBookingSchema),
 	UpdateBookingController
 );
+
+BookingRouter.delete("/:id", AuthGuard("ADMIN"), DeleteBookingController);
