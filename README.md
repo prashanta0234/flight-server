@@ -18,7 +18,7 @@ A simple flight booking application.
 
 1. Clone the repository:
    ```bash
-   git clone [<repository-url>](https://github.com/prashanta0234/flight-server)
+   git clone https://github.com/prashanta0234/flight-server
    cd flight-server
    ```
 2. Run the project
