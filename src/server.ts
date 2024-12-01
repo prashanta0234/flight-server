@@ -12,7 +12,7 @@ const port = config.PORT;
 app.use("/api", AppRouter);
 
 app.get("/", (req: Request, res: Response) => {
-	res.send("Hello from Doctors server!");
+	res.send("Hello from Flight server!");
 });
 
 app.use(GlobalErrorHandler);

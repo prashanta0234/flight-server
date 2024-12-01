@@ -1,0 +1,26 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.FlightRouter = void 0;
+var express_1 = require("express");
+var authGuard_1 = require("../../middleware/authGuard");
+var validation_handler_1 = require("../../middleware/validation.handler");
+var createFlight_schema_1 = __importDefault(require("./schemas/createFlight.schema"));
+var createFlight_controller_1 = __importDefault(require("./controllers/createFlight.controller"));
+var getFlights_controller_1 = __importDefault(require("./controllers/getFlights.controller"));
+var queryValidation_handler_1 = require("../../middleware/queryValidation.handler");
+var getFilterFlights_controller_1 = __importDefault(require("./controllers/getFilterFlights.controller"));
+var filterFlight_schema_1 = require("./schemas/filterFlight.schema");
+var getFlightById_controller_1 = __importDefault(require("./controllers/getFlightById.controller"));
+var updateFlight_controller_1 = __importDefault(require("./controllers/updateFlight.controller"));
+var updateFlight_schema_1 = __importDefault(require("./schemas/updateFlight.schema"));
+var deleteFlight_controller_1 = __importDefault(require("./controllers/deleteFlight.controller"));
+exports.FlightRouter = (0, express_1.Router)();
+exports.FlightRouter.post("/", (0, authGuard_1.AuthGuard)("ADMIN"), (0, validation_handler_1.ValidationHandler)(createFlight_schema_1.default), createFlight_controller_1.default);
+exports.FlightRouter.get("/", getFlights_controller_1.default);
+exports.FlightRouter.get("/search", (0, queryValidation_handler_1.QueryValidationHandler)(filterFlight_schema_1.FilterFlightQuerySchema), getFilterFlights_controller_1.default);
+exports.FlightRouter.get("/:id", getFlightById_controller_1.default);
+exports.FlightRouter.patch("/:id", (0, authGuard_1.AuthGuard)("ADMIN"), (0, validation_handler_1.ValidationHandler)(updateFlight_schema_1.default), updateFlight_controller_1.default);
+exports.FlightRouter.delete("/:id", (0, authGuard_1.AuthGuard)("ADMIN"), deleteFlight_controller_1.default);

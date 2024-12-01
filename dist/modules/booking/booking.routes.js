@@ -1,0 +1,24 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.BookingRouter = void 0;
+var express_1 = require("express");
+var validation_handler_1 = require("../../middleware/validation.handler");
+var bookSeats_schema_1 = __importDefault(require("./schemas/bookSeats.schema"));
+var bookSeats_controller_1 = __importDefault(require("./controllers/bookSeats.controller"));
+var authGuard_1 = require("../../middleware/authGuard");
+var confirmSeats_controller_1 = __importDefault(require("./controllers/confirmSeats.controller"));
+var getUserBookings_controller_1 = __importDefault(require("./controllers/getUserBookings.controller"));
+var getBookings_controller_1 = __importDefault(require("./controllers/getBookings.controller"));
+var updateBooking_schema_1 = __importDefault(require("./schemas/updateBooking.schema"));
+var updateBookings_controller_1 = __importDefault(require("./controllers/updateBookings.controller"));
+var deleteBookings_controller_1 = __importDefault(require("./controllers/deleteBookings.controller"));
+exports.BookingRouter = (0, express_1.Router)();
+exports.BookingRouter.post("/", (0, authGuard_1.AuthGuard)("USER"), (0, validation_handler_1.ValidationHandler)(bookSeats_schema_1.default), bookSeats_controller_1.default);
+exports.BookingRouter.post("/confirm", (0, authGuard_1.AuthGuard)("USER"), (0, validation_handler_1.ValidationHandler)(bookSeats_schema_1.default), confirmSeats_controller_1.default);
+exports.BookingRouter.get("/user/:id", (0, authGuard_1.AuthGuard)("USER"), getUserBookings_controller_1.default);
+exports.BookingRouter.get("/", (0, authGuard_1.AuthGuard)("ADMIN"), getBookings_controller_1.default);
+exports.BookingRouter.patch("/:id", (0, authGuard_1.AuthGuard)("ADMIN"), (0, validation_handler_1.ValidationHandler)(updateBooking_schema_1.default), updateBookings_controller_1.default);
+exports.BookingRouter.delete("/:id", (0, authGuard_1.AuthGuard)("ADMIN"), deleteBookings_controller_1.default);
