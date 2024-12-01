@@ -1,9 +1,18 @@
 # Node.js Application
 
-A simple Node.js application.
+A simple flight booking application.
 
 ## Features
-- Add your app's features here.
+- Add Flights
+- Watch Flight list
+- Edit Flight
+- Delete Flight
+- Filter Flight
+- Add seat booking with 2 min reservation
+- Delete bookings
+- Update bookings
+- Login
+- Registration
 
 ## Installation
 
