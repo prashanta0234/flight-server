@@ -8,6 +8,8 @@ import { QueryValidationHandler } from "../../middleware/queryValidation.handler
 import GetFilterFlightsController from "./controllers/getFilterFlights.controller";
 import { FilterFlightQuerySchema } from "./schemas/filterFlight.schema";
 import GetFlightsByIdController from "./controllers/getFlightById.controller";
+import UpdateFlightController from "./controllers/updateFlight.controller";
+import UpdateFlightSchema from "./schemas/updateFlight.schema";
 
 export const FlightRouter = Router();
 
@@ -24,3 +26,10 @@ FlightRouter.get(
 	GetFilterFlightsController
 );
 FlightRouter.get("/:id", GetFlightsByIdController);
+
+FlightRouter.patch(
+	"/:id",
+	AuthGuard("ADMIN"),
+	ValidationHandler(UpdateFlightSchema),
+	UpdateFlightController
+);

@@ -1,6 +1,7 @@
 import BookingModel from "../model/booking.model";
 import { SeatModel } from "../../flight/models/flights.model";
 import mongoose from "mongoose";
+import { ErrorMaker } from "../../../utils/error-maker";
 
 const DeleteBookingService = async (id: string) => {
 	const session = await mongoose.startSession();
@@ -10,7 +11,7 @@ const DeleteBookingService = async (id: string) => {
 		const booking = await BookingModel.findById(id).populate("seatsBooked");
 
 		if (!booking) {
-			throw new Error("Booking not found.");
+			throw ErrorMaker("Not found", "Booking not found.", 404);
 		}
 
 		await SeatModel.updateMany(

@@ -1,6 +1,7 @@
 import { SeatModel } from "../../flight/models/flights.model";
 import mongoose from "mongoose";
 import { SeatBookingProps } from "../schemas/bookSeats.schema";
+import { ErrorMaker } from "../../../utils/error-maker";
 
 type props = SeatBookingProps & {
 	userId: string;
@@ -19,7 +20,11 @@ const BookSeatsService = async (data: props) => {
 		}).session(session);
 
 		if (seats.length !== seatNumbers.length) {
-			throw new Error("Some seats are already booked or unavailable.");
+			throw ErrorMaker(
+				"Unavailable",
+				"Some seats are already booked or unavailable.",
+				400
+			);
 		}
 
 		await SeatModel.updateMany(

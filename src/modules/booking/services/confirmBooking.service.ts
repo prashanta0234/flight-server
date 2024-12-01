@@ -2,6 +2,7 @@ import BookingModel from "../model/booking.model";
 import { FlightModel, SeatModel } from "../../flight/models/flights.model";
 import mongoose from "mongoose";
 import { SeatBookingProps } from "../schemas/bookSeats.schema";
+import { ErrorMaker } from "../../../utils/error-maker";
 
 type props = SeatBookingProps & {
 	userId: string;
@@ -15,7 +16,7 @@ const ConfirmBookingService = async (data: props) => {
 	try {
 		const flight = await FlightModel.findById(flightId).session(session);
 		if (!flight) {
-			throw new Error("Flight not found.");
+			throw ErrorMaker("Not found", "Flight not found.", 404);
 		}
 		const seats = await SeatModel.find({
 			flightId,

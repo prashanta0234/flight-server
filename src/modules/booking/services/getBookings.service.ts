@@ -1,3 +1,4 @@
+import { ErrorMaker } from "../../../utils/error-maker";
 import { FlightModel } from "../../flight/models/flights.model";
 import BookingModel from "../model/booking.model";
 
@@ -16,7 +17,7 @@ const GetBookingsService = async (page: number = 1, limit: number = 10) => {
 		});
 
 	if (!userBookings || userBookings.length === 0) {
-		throw new Error("No bookings found for this user.");
+		throw ErrorMaker("Not found", "No bookings found for this user.", 404);
 	}
 
 	return userBookings;

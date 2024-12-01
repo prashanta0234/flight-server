@@ -1,6 +1,7 @@
 import BookingModel from "../model/booking.model";
 import { SeatModel } from "../../flight/models/flights.model";
 import mongoose from "mongoose";
+import { ErrorMaker } from "../../../utils/error-maker";
 
 type UpdateBookingProps = {
 	bookingId: string;
@@ -18,7 +19,7 @@ const UpdateBookingService = async (data: UpdateBookingProps) => {
 		}>("seatsBooked");
 
 		if (!booking) {
-			throw new Error("Booking not found.");
+			throw ErrorMaker("Not found", "Booking not found.", 404);
 		}
 
 		await SeatModel.updateMany(
@@ -37,8 +38,10 @@ const UpdateBookingService = async (data: UpdateBookingProps) => {
 		}).session(session);
 
 		if (newSeats.length !== newSeatNumbers.length) {
-			throw new Error(
-				"Some of the new seats are already booked or unavailable."
+			throw ErrorMaker(
+				"Unavailable",
+				"Some of the new seats are already booked or unavailable.",
+				400
 			);
 		}
 
