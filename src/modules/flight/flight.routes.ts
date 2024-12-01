@@ -10,6 +10,7 @@ import { FilterFlightQuerySchema } from "./schemas/filterFlight.schema";
 import GetFlightsByIdController from "./controllers/getFlightById.controller";
 import UpdateFlightController from "./controllers/updateFlight.controller";
 import UpdateFlightSchema from "./schemas/updateFlight.schema";
+import DeleteFlightController from "./controllers/deleteFlight.controller";
 
 export const FlightRouter = Router();
 
@@ -33,3 +34,5 @@ FlightRouter.patch(
 	ValidationHandler(UpdateFlightSchema),
 	UpdateFlightController
 );
+
+FlightRouter.delete("/:id", AuthGuard("ADMIN"), DeleteFlightController);
