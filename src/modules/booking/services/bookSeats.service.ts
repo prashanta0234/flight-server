@@ -8,18 +8,17 @@ type props = SeatBookingProps & {
 };
 
 const BookSeatsService = async (data: props) => {
-	const { flightId, seatNumbers, userId } = data;
+	const { seatIds, userId } = data;
 	const session = await mongoose.startSession();
 	session.startTransaction();
 
 	try {
 		const seats = await SeatModel.find({
-			flightId,
-			seatNumber: { $in: seatNumbers },
+			_id: { $in: seatIds },
 			isBooked: false,
 		}).session(session);
 
-		if (seats.length !== seatNumbers.length) {
+		if (seats.length !== seatIds.length) {
 			throw ErrorMaker(
 				"Unavailable",
 				"Some seats are already booked or unavailable.",
@@ -44,7 +43,7 @@ const BookSeatsService = async (data: props) => {
 
 		setTimeout(async () => {
 			try {
-				const reservationExpiryTime = 2 * 60 * 1000;
+				const reservationExpiryTime = 2 * 60 * 1000; // 2 minutes
 				const expiredSeats = await SeatModel.updateMany(
 					{
 						_id: { $in: seats.map((seat) => seat._id) },

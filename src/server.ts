@@ -3,9 +3,11 @@ import { config } from "./utils/config";
 import { connectDB } from "./utils/dbConnection";
 import { GlobalErrorHandler } from "./middleware/global-error-validation";
 import { AppRouter } from "./modules/app.routes";
+import cors from "cors";
 
 const app: Express = express();
 app.use(express.json());
+app.use(cors());
 
 const port = config.PORT;
 

@@ -9,7 +9,7 @@ type props = SeatBookingProps & {
 };
 
 const ConfirmBookingService = async (data: props) => {
-	const { userId, flightId, seatNumbers } = data;
+	const { userId, flightId, seatIds } = data;
 	const session = await mongoose.startSession();
 	session.startTransaction();
 
@@ -18,14 +18,14 @@ const ConfirmBookingService = async (data: props) => {
 		if (!flight) {
 			throw ErrorMaker("Not found", "Flight not found.", 404);
 		}
+
 		const seats = await SeatModel.find({
-			flightId,
-			seatNumber: { $in: seatNumbers },
+			_id: { $in: seatIds },
 			isBooked: true,
 			bookedBy: userId,
 		}).session(session);
 
-		if (seats.length !== seatNumbers.length) {
+		if (seats.length !== seatIds.length) {
 			throw new Error("Some seats have been released or not reserved.");
 		}
 
